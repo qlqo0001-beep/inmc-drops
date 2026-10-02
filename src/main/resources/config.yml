@@ -1,0 +1,21 @@
+# inmc-drops 설정. 게임 안 /드랍 → 설정 에서 고치는 것이 편합니다(고치면 이 파일을 다시 씁니다).
+# worlds: 적지 않은 월드는 몹·작물·블록 전부 켜짐. 끄고 싶은 월드만 적습니다.
+
+# 새로 등록한 항목의 처음 확률(%)
+default-chance: 10.0
+
+# 드랍을 만든 사람만 이 시간(초) 동안 주울 수 있다. 0 = 끔
+pickup-protect-seconds: 5
+
+auto-farm:
+  # 청크 하나에서 1시간 동안 자동 농사(피스톤·물·주민 …)로 나올 수 있는 커스텀 드랍 수.
+  # -1 = 무제한, 0 = 자동 농사에서는 안 나옴
+  cap-per-chunk-hour: 64
+
+# 예:
+# worlds:
+#   - name: world
+#     mob: true
+#     crop: true
+#     block: false
+worlds: []
