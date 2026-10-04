@@ -55,6 +55,13 @@ class DropsPlugin : JavaPlugin() {
         logger.info("inmc-drops 활성화 완료 - 설정된 표 ${drops.tables.configuredCount()}개")
     }
 
+    /**
+     * 연동용 안정 진입점 — inmc-monster 가 드랍 이벤트 배율을 리플렉션으로 읽는다.
+     * 시그니처를 바꾸면 양쪽 CHANGELOG 에 적는다. 없거나 꺼져 있으면 1.0.
+     */
+    fun boostFactor(): Double =
+        if (::drops.isInitialized) drops.boost.factor() else 1.0
+
     override fun onDisable() {
         if (!::drops.isInitialized) return
         if (::ticker.isInitialized) ticker.stop()
