@@ -31,6 +31,9 @@ class MainMenu(drops: Drops, viewer: Player) : Menu(drops, viewer, SIZE, "<dark_
                 add("<gray>잠깐 모든 커스텀 드랍 확률을 올립니다.</gray>")
             })) { BoostMenu(drops, viewer).show() }
 
+        set(SLOT_HUB, Icon.of(Material.COMPASS, "<gold>어드민 메뉴로</gold>",
+            "<gray>각 플러그인 설정 허브로 돌아갑니다.</gray>")) { viewer.performCommand("메뉴 어드민") }
+
         fillEmpty(Icon.FILLER)
         set(SLOT_CLOSE, Icon.close()) { viewer.closeInventory() }
     }
@@ -50,6 +53,7 @@ class MainMenu(drops: Drops, viewer: Player) : Menu(drops, viewer, SIZE, "<dark_
         const val SLOT_GROUPS = 16
         const val SLOT_SETTINGS = 21
         const val SLOT_BOOST = 23
+        const val SLOT_HUB = 18
         const val SLOT_CLOSE = 26
     }
 }

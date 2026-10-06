@@ -64,7 +64,7 @@ class Delivery(private val drops: Drops) {
             for (command in entry.commands) runCommand(command, owner)
             val label = first?.let(Labels::of) ?: entry.label()
             if (entry.announce) {
-                val ph = Ph.of().player(owner.name).item(label).source(Labels.table(drops, table))
+                val ph = Ph.of().player(kr.inmc.core.integration.TitleForgeNames.displayName(owner.uniqueId, owner.name)).item(label).source(Labels.table(drops, table))
                 // 개인 설정 "희귀 드랍·당첨 공지 받기"를 끈 사람은 빼고 — 얻은 본인은 늘 본다(core PlayerSettings).
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (player != owner && !PlayerSettings.enabled(player, PlayerSettings.RARE_ANNOUNCE)) continue

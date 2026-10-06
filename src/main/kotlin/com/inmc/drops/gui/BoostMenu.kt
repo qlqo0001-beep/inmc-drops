@@ -18,6 +18,7 @@ class BoostMenu(drops: Drops, viewer: Player) : Menu(drops, viewer, SIZE, "<dark
         val boost = drops.boost
         set(SLOT_START, Icon.of(Material.FIREWORK_ROCKET, "<green>이벤트 시작</green>",
             "<gray>모든 커스텀 드랍 확률에 배율을 곱합니다(자동 농사 포함).</gray>",
+            "<gray>커스텀 몬스터 드랍에도 같이 걸립니다.</gray>",
             "<gray>보스바로 남은 시간이 보이고, 재시작해도 이어집니다.</gray>",
             "<dark_gray>진행 중이면 새 값으로 바꿉니다.</dark_gray>", "", "<yellow>▶ 클릭</yellow>")) {
             ask(DialogForm("<gold>드랍 이벤트</gold>")
