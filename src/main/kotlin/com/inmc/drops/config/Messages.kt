@@ -54,6 +54,9 @@ class Messages(values: Map<String, String>) : MessageCatalog<Ph>(values, DEFAULT
             // --- 도움말 -------------------------------------------------------------
             "help" to listOf(
                 "<gold>/드랍 정보</gold> <gray>- 몹·작물·블록에서 나오는 것</gray>",
+            ).joinToString("\n"),
+            // 관리자 줄은 권한이 있을 때만(2026-10-08).
+            "help-admin" to listOf(
                 "<red>/드랍</red> <gray>- 관리 화면</gray>",
                 "<red>/드랍 배율 <배율> <분></red> <gray>· </gray><red>/드랍 배율 끄기</red> <gray>- 드랍 이벤트</gray>",
                 "<red>/드랍 리로드</red> <gray>· </gray><red>/드랍 검증</red>",

@@ -43,7 +43,13 @@ class DropsCommand(private val drops: Drops, private val plugin: DropsPlugin) {
                 if (player.hasPermission(Drops.ADMIN)) MainMenu(drops, player).show() else info(player)
                 1
             }
-            .then(Commands.literal("도움말").executes { ctx -> drops.messages.send(sender(ctx), "help"); 1 })
+            .then(Commands.literal("도움말").executes { ctx ->
+                val sender = sender(ctx)
+                drops.messages.send(sender, "help")
+                // 관리자 줄은 권한이 있을 때만(2026-10-08).
+                if (sender.hasPermission(Drops.ADMIN)) drops.messages.send(sender, "help-admin")
+                1
+            })
             .then(Commands.literal("정보").executes { ctx -> player(ctx)?.let(::info); 1 })
             .then(
                 Commands.literal("배율").requires(::isAdmin)

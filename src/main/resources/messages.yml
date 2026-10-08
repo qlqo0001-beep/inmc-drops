@@ -40,6 +40,7 @@ verify-report: "<gray>결과 파일: <white>{value}</white></gray>"
 # --- 도움말 ---
 help: |-
   <gold>/드랍 정보</gold> <gray>- 몹·작물·블록에서 나오는 것</gray>
+help-admin: |-
   <red>/드랍</red> <gray>- 관리 화면</gray>
   <red>/드랍 배율 <배율> <분></red> <gray>· </gray><red>/드랍 배율 끄기</red> <gray>- 드랍 이벤트</gray>
   <red>/드랍 리로드</red> <gray>· </gray><red>/드랍 검증</red>
