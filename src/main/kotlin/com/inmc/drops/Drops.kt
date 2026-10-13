@@ -17,10 +17,8 @@ import kr.inmc.core.integration.MMOItemsHook
 import kr.inmc.core.item.ItemResolver
 import kr.inmc.core.util.Placeholders
 import org.bukkit.Bukkit
-import org.bukkit.GameMode
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -94,8 +92,5 @@ class Drops(override val plugin: JavaPlugin) : InmcHost {
 
         const val ADMIN = "inmcdrops.admin"
         const val INFO = "inmcdrops.info"
-
-        /** 서바이벌·모험만 — 크리에이티브로 부수거나 잡아서 뽑지 못하게. */
-        fun playable(player: Player): Boolean = player.gameMode == GameMode.SURVIVAL || player.gameMode == GameMode.ADVENTURE
     }
 }

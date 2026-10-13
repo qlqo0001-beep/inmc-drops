@@ -222,8 +222,8 @@ class Verifier(private val drops: Drops) {
 
         const val VERIFY_ID = "zz_verify"
 
-        /** 검사가 쓰는 자리 수(spot 0 ~ 16). 검사를 더하면 늘린다. */
-        const val SPOTS = 17
+        /** 검사가 쓰는 자리 수(spot 0 ~ 17). 검사를 더하면 늘린다. */
+        const val SPOTS = 18
 
         private fun pickaxe(silk: Boolean = false) = ItemStack(Material.DIAMOND_PICKAXE).also { if (silk) it.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 1) }
 
@@ -253,6 +253,17 @@ class Verifier(private val drops: Drops) {
                 s.set(block, Material.STONE)
                 s.hold(null)
                 s.breakBlock(block) ?: s.expectNone()
+            },
+            Check("크리에이티브로 캔 돌은 맨손이어도 나온다") { s ->
+                val block = s.spot(17)
+                s.set(block, Material.STONE)
+                s.hold(null)
+                s.player.gameMode = GameMode.CREATIVE
+                try {
+                    s.breakBlock(block) ?: s.expectDrop()
+                } finally {
+                    s.player.gameMode = GameMode.SURVIVAL
+                }
             },
             Check("보호 플러그인이 취소한 파괴는 안 나온다") { s ->
                 val block = s.spot(4)
@@ -334,6 +345,17 @@ class Verifier(private val drops: Drops) {
                     s.death(cow, s.player).callEvent()
                     s.expectDrop()
                 } finally {
+                    cow.remove()
+                }
+            },
+            Check("크리에이티브로 잡은 몹도 나온다") { s ->
+                val cow = s.cow()
+                s.player.gameMode = GameMode.CREATIVE
+                try {
+                    s.death(cow, s.player).callEvent()
+                    s.expectDrop()
+                } finally {
+                    s.player.gameMode = GameMode.SURVIVAL
                     cow.remove()
                 }
             },

@@ -35,8 +35,8 @@
 
 | 사건 | 조건 |
 |---|---|
-| `EntityDeathEvent` | `killer`(플레이어) 있음 — 바닐라의 "플레이어 처치" 판정 그대로 · 처치자 서바이벌/모험 · 커스텀 몹 아님 · 월드 켜짐 |
-| `BlockBreakEvent` | 서바이벌/모험 · `isDropItems` · **놓은 블록 아님** · **섬세한 손길 아님** · (블록) 맞는 도구가 필요한 블록이면 맞는 도구 · (작물) 규칙 통과 · 월드 켜짐 |
+| `EntityDeathEvent` | `killer`(플레이어) 있음 — 바닐라의 "플레이어 처치" 판정 그대로 · 커스텀 몹 아님 · 월드 켜짐 |
+| `BlockBreakEvent` | `isDropItems` · **놓은 블록 아님** · **섬세한 손길 아님** · (블록) 맞는 도구가 필요한 블록이면 맞는 도구(크리에이티브는 안 봄) · (작물) 규칙 통과 · 월드 켜짐 |
 | `PlayerHarvestBlockEvent` | 열매 규칙의 작물 우클릭 |
 | `BlockBreakBlockEvent`(피스톤·물) · `BlockDestroyEvent`(받침 무너짐·주민 …, `willDrop`) | 작물만 · 규칙 통과 · 놓은 블록 아님 · **청크당 1시간 상한** → 자동 농사 확률, 주인 없음 |
 

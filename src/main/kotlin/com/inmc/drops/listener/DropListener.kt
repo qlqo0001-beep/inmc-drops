@@ -10,6 +10,7 @@ import com.inmc.drops.table.Category
 import com.inmc.drops.table.DropTable
 import io.papermc.paper.event.block.BlockBreakBlockEvent
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.block.Block
@@ -50,7 +51,7 @@ class DropListener(private val drops: Drops) : Listener {
         if (dead is Player || !Mobs.include(dead.type)) return
         // 플레이어가 직접 처치한 것만(사용자 결정). 바닐라의 "플레이어 처치" 판정 그대로다.
         val killer = dead.killer ?: return
-        if (!Drops.playable(killer) || isCustomMonster(dead)) return
+        if (isCustomMonster(dead)) return
         if (!drops.config.allows(dead.world.name, Category.MOB)) return
         val looting = killer.inventory.itemInMainHand.getEnchantmentLevel(Enchantment.LOOTING)
         roll(drops.tables.forMob(dead.type), dead.location, killer, looting, auto = false)
@@ -67,7 +68,7 @@ class DropListener(private val drops: Drops) : Listener {
         firstThisTick(block)
         val player = event.player
         // isDropItems: 커스텀아이템이 커스텀 블록(소리블록·후렴초를 빌린 것)에서 꺼 둔다 — 그 블록은 자동으로 빠진다.
-        if (placed || !Drops.playable(player) || !event.isDropItems) return
+        if (placed || !event.isDropItems) return
         val tool = player.inventory.itemInMainHand
         // 섬세한 손길이면 언제나 없다(사용자 결정) — 들고 가서 다시 놓는 반복의 시작을 끊는다.
         if (tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) > 0) return
@@ -82,8 +83,9 @@ class DropListener(private val drops: Drops) : Listener {
         val table = drops.tables.block(block.type) ?: return
         if (!drops.config.allows(block.world.name, Category.BLOCK)) return
         // 맞는 도구가 필요한 블록을 맞지 않는 도구로 캐면 바닐라도 아무것도 안 준다. 유리처럼 도구가 필요 없는 블록은 맨손도 된다.
+        // 크리에이티브는 무엇으로든 한 번에 부수니 도구를 보지 않는다.
         val data = block.blockData
-        if (data.requiresCorrectToolForDrops() && !data.isPreferredTool(tool)) return
+        if (player.gameMode != GameMode.CREATIVE && data.requiresCorrectToolForDrops() && !data.isPreferredTool(tool)) return
         roll(listOf(table), center(block), player, fortune, auto = false)
     }
 
@@ -94,7 +96,7 @@ class DropListener(private val drops: Drops) : Listener {
         val block = event.harvestedBlock
         val crop = drops.crops.of(block.type)?.takeIf { it.rule == CropRule.BERRIES } ?: return
         val player = event.player
-        if (!Drops.playable(player) || !drops.config.allows(block.world.name, Category.CROP)) return
+        if (!drops.config.allows(block.world.name, Category.CROP)) return
         roll(drops.tables.forCrop(crop), center(block), player, 0, auto = false)
     }
 
