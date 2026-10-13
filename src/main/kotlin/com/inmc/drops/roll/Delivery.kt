@@ -6,6 +6,7 @@ import com.inmc.drops.util.Labels
 import com.inmc.drops.util.Ph
 import kr.inmc.core.event.InmcSignalEvent
 import kr.inmc.core.integration.PlayerSettings
+import kr.inmc.core.integration.Vanish
 import kr.inmc.core.util.Text
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -66,8 +67,10 @@ class Delivery(private val drops: Drops) {
             if (entry.announce) {
                 val ph = Ph.of().player(kr.inmc.core.integration.TitleForgeNames.displayName(owner.uniqueId, owner.name)).item(label).source(Labels.table(drops, table))
                 // 개인 설정 "희귀 드랍·당첨 공지 받기"를 끈 사람은 빼고 — 얻은 본인은 늘 본다(core PlayerSettings).
+                // 얻은 사람이 투명이면 그를 볼 수 있는 사람에게만(core Vanish) — 공지가 투명을 들키게 하지 않는다.
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (player != owner && !PlayerSettings.enabled(player, PlayerSettings.RARE_ANNOUNCE)) continue
+                    if (!Vanish.canSee(player, owner)) continue
                     drops.messages.send(player, "announce", ph)
                 }
             }
